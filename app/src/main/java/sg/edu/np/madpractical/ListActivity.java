@@ -27,7 +27,7 @@ public class ListActivity extends AppCompatActivity {
     private static String TAB = "MAD Practical";
     public static ArrayList<User> userList = new ArrayList<>();
 
-
+    MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,12 @@ public class ListActivity extends AppCompatActivity {
         }
 
          */
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+
+        for (int i = 0; i < 20; i++){
+            User newUser = objCreator();
+            dbHandler.addUser(newUser);
+        }
+
         userList = dbHandler.getUsers();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -81,7 +86,7 @@ public class ListActivity extends AppCompatActivity {
         Log.v(TAB, "Destroy");
     }
 
-    /*private int randomGen(){
+    private int randomGen(){
         Random ran = new Random();
         int otp = ran.nextInt();
         return otp;
@@ -114,5 +119,4 @@ public class ListActivity extends AppCompatActivity {
         return newUser;
     }
 
-     */
 }

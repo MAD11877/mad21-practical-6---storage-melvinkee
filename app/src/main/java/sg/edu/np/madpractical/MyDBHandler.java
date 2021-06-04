@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static String COLUMN_DESCRIPTION = "Description";
     public static String COLUMN_ID = "Id";
     public static String COLUMN_FOLLOWED = "Followed";
+    private static String TAB = "MAD Practical";
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
     {
@@ -46,11 +48,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE);
 
-        for (int i = 0; i < 20; i++){
-            objCreator();
-            userList.add(objCreator());
-            addUser(objCreator());
-        }
+        Log.v(TAB, "Created Database");
 
     }
 
@@ -74,6 +72,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<User> getUsers() {
+
         return userList;
     }
 
