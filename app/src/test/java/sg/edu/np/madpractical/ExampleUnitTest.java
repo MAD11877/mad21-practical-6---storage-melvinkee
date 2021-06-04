@@ -1,4 +1,4 @@
-package sg.edu.np.datastorage;
+package sg.edu.np.madpractical;
 
 import org.junit.Test;
 

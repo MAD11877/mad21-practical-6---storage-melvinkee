@@ -1,4 +1,4 @@
-package sg.edu.np.datastorage;
+package sg.edu.np.madpractical;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("sg.edu.np.datastorage", appContext.getPackageName());
+        assertEquals("sg.edu.np.madpractical", appContext.getPackageName());
     }
 }
