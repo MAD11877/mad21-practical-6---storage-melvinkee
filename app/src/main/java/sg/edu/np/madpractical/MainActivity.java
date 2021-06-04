@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static String TAB = "MAD Practical";
+    MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!status){
                     follow.setText("Follow");
                     myself.setFollowed(false);
+                    dbHandler.updateUser(myself);
                     Toast.makeText(getApplicationContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
                 }
                 else if (status){
                     follow.setText("Unfollow");
                     myself.setFollowed(true);
+                    dbHandler.updateUser(myself);
                     Toast.makeText(getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 }
                 else {

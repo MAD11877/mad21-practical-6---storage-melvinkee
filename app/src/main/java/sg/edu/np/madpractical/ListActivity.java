@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,15 +26,22 @@ import java.util.Random;
 public class ListActivity extends AppCompatActivity {
     private static String TAB = "MAD Practical";
     public static ArrayList<User> userList = new ArrayList<>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        for (int i = 0; i < 20; i++){
+        /*for (int i = 0; i < 20; i++){
             objCreator();
             userList.add(objCreator());
         }
+
+         */
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        userList = dbHandler.getUsers();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         Adaptor customAdaptor = new Adaptor(userList);
@@ -73,7 +81,7 @@ public class ListActivity extends AppCompatActivity {
         Log.v(TAB, "Destroy");
     }
 
-    private int randomGen(){
+    /*private int randomGen(){
         Random ran = new Random();
         int otp = ran.nextInt();
         return otp;
@@ -105,4 +113,6 @@ public class ListActivity extends AppCompatActivity {
         newUser.setFollowed(newStatus);
         return newUser;
     }
+
+     */
 }
