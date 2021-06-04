@@ -42,8 +42,7 @@ public class ListActivity extends AppCompatActivity {
          */
 
         for (int i = 0; i < 20; i++){
-            User newUser = objCreator();
-            dbHandler.addUser(newUser);
+            dbHandler.addUser(objCreator());
         }
 
         userList = dbHandler.getUsers();

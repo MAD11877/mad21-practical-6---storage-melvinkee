@@ -26,8 +26,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public static ArrayList<User> userList = new ArrayList<>();
 
     public static int DATABASE_VERSION = 1;
-    public static String DATABASE_NAME = "AccountDB.db";
-    public static String ACCOUNTS = "Accounts";
+    public static String DATABASE_NAME = "UsersDB.db";
+    public static String USERS = "Users";
     public static String COLUMN_NAME = "Name";
     public static String COLUMN_DESCRIPTION = "Description";
     public static String COLUMN_ID = "Id";
@@ -42,7 +42,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String CREATE_TABLE = "CREATE TABLE " + ACCOUNTS + "(" + COLUMN_NAME + " TEXT,"
+        String CREATE_TABLE = "CREATE TABLE " + USERS + "(" + COLUMN_NAME + " TEXT,"
                 + COLUMN_DESCRIPTION + " TEXT," + COLUMN_ID + " TEXT," + COLUMN_FOLLOWED
                 + " TEXT" + ")";
 
@@ -55,7 +55,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        db.execSQL("DROP TABLE IF EXISTS " + ACCOUNTS);
+        db.execSQL("DROP TABLE IF EXISTS " + USERS);
         onCreate(db);
     }
 
@@ -67,17 +67,34 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_ID, user.getId());
         values.put(COLUMN_FOLLOWED, user.isFollowed());
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(ACCOUNTS, null, values);
+        db.insert(USERS, null, values);
         db.close();
     }
 
     public ArrayList<User> getUsers() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + USERS;
+        Cursor cursor = db.rawQuery(query, null);
 
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast())
+        {
+            User queryData = new User();
+            queryData.setName(cursor.getString(0));
+            queryData.setDescription(cursor.getString(1));
+            queryData.setId(cursor.getInt(2));
+            queryData.setFollowed(cursor.getInt(3) == 1);
+            userList.add(queryData);
+
+            cursor.moveToNext();
+        }
+        db.close();
         return userList;
     }
 
     public void updateUser(User user){
-        String query = "SELECT * FROM " + ACCOUNTS + " WHERE " + COLUMN_NAME + "=\"" + user.getName().toString() + "\"";
+        String query = "SELECT * FROM " + USERS + " WHERE " + COLUMN_NAME + "=\"" + user.getName().toString() + "\"";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -95,7 +112,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    private int randomGen(){
+    /*private int randomGen(){
         Random ran = new Random();
         int otp = ran.nextInt();
         return otp;
@@ -127,4 +144,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         newUser.setFollowed(newStatus);
         return newUser;
     }
+
+     */
 }
